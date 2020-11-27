@@ -9,6 +9,8 @@
 
 package com.t_task;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Scanner;
 
 /**
@@ -29,7 +31,7 @@ public class Main {
                     "\n\t4. View current Users" +
                     "\n\t5. Save to file" +
                     "\n\t6. Exit");
-
+            System.out.print("\nChoice: ");
             Scanner input = new Scanner(System.in);
             String choice = input.nextLine();
             switch (choice) {
@@ -37,11 +39,11 @@ public class Main {
                     database.addNewUser();
                     break;
                 case "2":
-                    database.editUser(new InputChecker()
+                    database.editUser(new UserNumber()
                             .getNumber(database.getSizeOfDatabase()));
                     break;
                 case "3":
-                    database.deleteUser(new InputChecker()
+                    database.deleteUser(new UserNumber()
                             .getNumber(database.getSizeOfDatabase()));
                     break;
                 case "4":

@@ -2,12 +2,9 @@ package com.t_task;
 
 import java.util.Scanner;
 
-/**
- * Asking for correct input 'til gets it
- */
-class InputChecker {
-
-    /**Returns number of User, application wants to interact with*/
+/**Handles exceptions caused by
+ * wrong input of user's number*/
+public class UserNumber {
     public Integer getNumber(int size){
         Scanner input = new Scanner(System.in);
         boolean isFound = false;
