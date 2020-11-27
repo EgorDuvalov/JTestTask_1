@@ -3,14 +3,17 @@ package com.t_task;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Contains list of current users
  * and interaction methods
  */
 class Database {
-    private final Vector<User> list = new Vector<>();
+    /*Map receives <userPosition, userData> */
+    private final Map<Integer, User> list = new HashMap();
 
     public Database() {
         setDefaultList();
@@ -26,8 +29,8 @@ class Database {
         fst.setEmail("t_stark@stark.inc");
         fst.setRoles(new String[]{"Billionaire", "Playboy", "Philanthropist"});
         fst.setPhones(new String[]{"37511 1111111",
-                                    "37522 2222222",
-                                    "37533 3333333"});
+                "37522 2222222",
+                "37533 3333333"});
 
         snd.setName("Steve");
         snd.setSurname("Rogers");
@@ -41,9 +44,9 @@ class Database {
         trd.setRoles(new String[]{"Friendly neighbor"});
         trd.setPhones(new String[]{"37577 7777777"});
 
-        list.add(fst);
-        list.add(snd);
-        list.add(trd);
+        list.put(1, fst);
+        list.put(2, snd);
+        list.put(3, trd);
     }
 
     public void addNewUser() {
@@ -53,24 +56,26 @@ class Database {
         user.setEmail();
         user.setRoles();
         user.setPhones();
-        list.add(user);
+        list.put(list.size() + 1, user);
     }
 
     public void editUser(int position) {
         int index = position - 1;
         System.out.println("Choose item you want to change");
         System.out.println("\t1.Name" +
-                           "\n\t2.Surname" +
-                           "\n\t3.Email" +
-                           "\n\t4.Roles" +
-                           "\n\t5.Phones");
-        String choice=new InputChecker().getChoice(5);
+                "\n\t2.Surname" +
+                "\n\t3.Email" +
+                "\n\t4.Roles" +
+                "\n\t5.Phones");
+        Scanner input = new Scanner(System.in);
+        String choice = input.nextLine();
         switch (choice) {
-            case "1" -> list.elementAt(index).setName();
-            case "2" -> list.elementAt(index).setSurname();
-            case "3" -> list.elementAt(index).setEmail();
-            case "4" -> list.elementAt(index).setRoles();
-            default -> list.elementAt(index).setPhones();
+            case "1" -> list.get(index).setName();
+            case "2" -> list.get(index).setSurname();
+            case "3" -> list.get(index).setEmail();
+            case "4" -> list.get(index).setRoles();
+            case "5" -> list.get(index).setPhones();
+            default -> System.out.println("Choose one of provided options");
         }
     }
 
@@ -83,21 +88,21 @@ class Database {
         for (int i = 0; i < list.size(); i++) {
             System.out.println();
             System.out.println("User #" + (i + 1));
-            System.out.println("Name: " + list.elementAt(i).getName());
-            System.out.println("Surname: " + list.elementAt(i).getSurname());
-            System.out.println("Email: " + list.elementAt(i).getEmail());
-            String[] Roles = list.elementAt(i).getRoles();
-            System.out.print("Roles: " + Roles[0]);
+            System.out.println("Name: " + list.get(i).getName());
+            System.out.println("Surname: " + list.get(i).getSurname());
+            System.out.println("Email: " + list.get(i).getEmail());
+            String[] roles = list.get(i).getRoles();
+            System.out.print("Roles: " + roles[0]);
 
-            for (int j = 1; j < Roles.length; j++) {
-                System.out.print(", " + Roles[j]);
+            for (int j = 1; j < roles.length; j++) {
+                System.out.print(", " + roles[j]);
             }
 
             System.out.println();
-            String[] Phones = list.elementAt(i).getPhones();
-            System.out.print("Phones: " + Phones[0]);
-            for (int j = 1; j < Phones.length; j++) {
-                System.out.print(", " + Phones[j]);
+            String[] phones = list.get(i).getPhones();
+            System.out.print("Phones: " + phones[0]);
+            for (int j = 1; j < phones.length; j++) {
+                System.out.print(", " + phones[j]);
             }
             System.out.println("");
         }
@@ -122,25 +127,25 @@ class Database {
         for (int i = 0; i < list.size(); i++) {
             data.println("");
             data.println("User #" + (i + 1));
-            data.println("Name: " + list.elementAt(i).getName());
-            data.println("Surname: " + list.elementAt(i).getSurname());
-            data.println("Email: " + list.elementAt(i).getEmail());
-            String[] Roles = list.elementAt(i).getRoles();
-            data.print("Roles: " + Roles[0]);
-            for (int j = 1; j < Roles.length; j++) {
-                data.print(", " + Roles[j]);
+            data.println("Name: " + list.get(i).getName());
+            data.println("Surname: " + list.get(i).getSurname());
+            data.println("Email: " + list.get(i).getEmail());
+            String[] roles = list.get(i).getRoles();
+            data.print("roles: " + roles[0]);
+            for (int j = 1; j < roles.length; j++) {
+                data.print(", " + roles[j]);
             }
             data.println("");
-            String[] Phones = list.elementAt(i).getPhones();
-            data.print("Phones: " + Phones[0]);
-            for (int j = 1; j < Phones.length; j++) {
-                data.print(", " + Roles[j]);
+            String[] phones = list.get(i).getPhones();
+            data.print("Phones: " + phones[0]);
+            for (int j = 1; j < phones.length; j++) {
+                data.print(", " + phones[j]);
             }
             data.println("");
         }
     }
 
-    public int getSizeOfDatabase(){
+    public int getSizeOfDatabase() {
         return list.size();
     }
 }

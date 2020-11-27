@@ -9,6 +9,8 @@
 
 package com.t_task;
 
+import java.util.Scanner;
+
 /**
  * The main menu of application
  */
@@ -27,17 +29,20 @@ public class Main {
                     "\n\t4. View current Users" +
                     "\n\t5. Save to file" +
                     "\n\t6. Exit");
-            String choice;
-            choice = new InputChecker().getChoice(6);
+
+            Scanner input = new Scanner(System.in);
+            String choice = input.nextLine();
             switch (choice) {
                 case "1":
                     database.addNewUser();
                     break;
                 case "2":
-                    database.editUser(new InputChecker().getNumber(database.getSizeOfDatabase()));
+                    database.editUser(new InputChecker()
+                            .getNumber(database.getSizeOfDatabase()));
                     break;
                 case "3":
-                    database.deleteUser(new InputChecker().getNumber(database.getSizeOfDatabase()));
+                    database.deleteUser(new InputChecker()
+                            .getNumber(database.getSizeOfDatabase()));
                     break;
                 case "4":
                     database.showDatabase();
@@ -45,8 +50,10 @@ public class Main {
                 case "5":
                     database.saveDatabaseToFile();
                     break;
-                default:
+                case "6":
                     return;
+                default:
+                    System.out.println("Choose one of provided options");
             }
         }
         while (true);
