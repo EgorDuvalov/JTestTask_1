@@ -3,20 +3,30 @@ package com.t_task;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Contains list of current users
  * and interaction methods
  */
 class Database {
-    /*Map receives <userPosition, userData> */
-    private final Map<Integer, User> list = new HashMap();
+    private final List<User> list = new ArrayList<>();
 
     public Database() {
         setDefaultList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Database database = (Database) o;
+        return Objects.equals(list, database.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 
     private void setDefaultList() {
@@ -44,19 +54,20 @@ class Database {
         trd.setRoles(new String[]{"Friendly neighbor"});
         trd.setPhones(new String[]{"37577 7777777"});
 
-        list.put(1, fst);
-        list.put(2, snd);
-        list.put(3, trd);
+        list.add( fst);
+        list.add( snd);
+        list.add(trd);
     }
 
     public void addNewUser() {
         User user = new User();
+        System.out.println("\nNew user's data:");
         user.setName();
         user.setSurname();
         user.setEmail();
         user.setRoles();
         user.setPhones();
-        list.put(list.size() + 1, user);
+        list.add(user);
     }
 
     public void editUser(int position) {
@@ -80,12 +91,11 @@ class Database {
     }
 
     public void deleteUser(int position) {
-        int index = position - 1;
-        list.remove(index);
+        list.remove(position - 1);
     }
 
     public void showDatabase() {
-        for (int i = 0; i < list.size(); i++) {
+        for (int i =0; i < list.size(); i++) {
             System.out.println();
             System.out.println("User #" + (i + 1));
             System.out.println("Name: " + list.get(i).getName());
@@ -104,7 +114,7 @@ class Database {
             for (int j = 1; j < phones.length; j++) {
                 System.out.print(", " + phones[j]);
             }
-            System.out.println("");
+            System.out.println(" ");
         }
     }
 
@@ -126,7 +136,7 @@ class Database {
     private void printDataToFile(PrintWriter data) {
         for (int i = 0; i < list.size(); i++) {
             data.println("");
-            data.println("User #" + (i + 1));
+            data.println("User #" + (i+1));
             data.println("Name: " + list.get(i).getName());
             data.println("Surname: " + list.get(i).getSurname());
             data.println("Email: " + list.get(i).getEmail());
